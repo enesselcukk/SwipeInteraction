@@ -24,4 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "SwipeInteraction"
 include(":app")
- 
+include(":core")
+include(":feature")
