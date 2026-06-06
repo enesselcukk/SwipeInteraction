@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">SwipeInteraction</string>
+
+    <string name="tutorial_complete_title">You\'re all set!</string>
+    <string name="tutorial_complete_message">You\'ve learned all four swipe gestures.</string>
+    <string name="tutorial_try_again">Try again</string>
+
+    <string name="action_complete">Complete</string>
+    <string name="action_snooze">Snooze</string>
+    <string name="action_archive">Archive</string>
+    <string name="action_delete">Delete</string>
+
+    <string name="desc_complete">Mark the task you finished as complete.</string>
+    <string name="desc_snooze">Snooze the task to be reminded later.</string>
+    <string name="desc_archive">Remove the task from the list and move it to the archive.</string>
+    <string name="desc_delete">Permanently delete the task.</string>
+
+    <string name="hint_complete">Swipe right</string>
+    <string name="hint_snooze">Swipe left</string>
+    <string name="hint_archive">Swipe down</string>
+    <string name="hint_delete">Swipe up</string>
+</resources>
