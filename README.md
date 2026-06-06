@@ -11,6 +11,10 @@ An Android sample app that demonstrates polished, four-direction swipe gestures 
 - **Completion screen** — a success state with a **Try again** button to restart the tutorial
 - **Material 3 design** — action-specific color palette, edge-to-edge layout, and dynamic theming support
 
+## Screen recording
+
+https://github.com/user-attachments/assets/b43e707a-82c0-4407-b24e-61740eb333ac
+
 ## Gestures
 
 | Direction | Action  | Use case                                      |
