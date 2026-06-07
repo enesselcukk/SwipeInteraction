@@ -15,7 +15,7 @@ An Android sample app that demonstrates a polished, looping card stack built wit
 
 ## Screen recording
 
-https://github.com/user-attachments/assets/385ae560-a88a-40c4-95a2-dd55a719f430
+https://github.com/user-attachments/assets/cb00dbe2-9642-499b-b186-325ad0029ae4
 
 ## Gestures
 
