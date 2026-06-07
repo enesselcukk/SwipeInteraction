@@ -17,3 +17,6 @@ val OnArchiveContainer = Color(0xFF6D3A00)
 val DeleteContainer = Color(0xFFFFDAD6)
 val DeleteContainerHigh = Color(0xFFFFB4AB)
 val OnDeleteContainer = Color(0xFF93000A)
+
+val CatalogInk = Color(0xFF1C1C1C)
+val CatalogMuted = Color(0xFF6B6560)
