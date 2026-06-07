@@ -15,34 +15,6 @@ import com.example.core.model.SwipeDirection
 import kotlinx.coroutines.launch
 
 @Composable
-fun SwipeableCard(
-    state: SwipeCardState,
-    enabled: Boolean,
-    onSwipeAttempt: (SwipeDirection) -> Unit,
-    modifier: Modifier = Modifier,
-    content: @Composable BoxScope.() -> Unit
-) {
-    Box(
-        modifier = modifier
-            .onSizeChanged { size: IntSize ->
-                state.updateSize(size.width.toFloat(), size.height.toFloat())
-            }
-            .swipeCardTransform(state)
-            .swipeCardDrag(state, enabled, onSwipeAttempt),
-        content = content
-    )
-}
-
-fun Modifier.swipeCardTransform(state: SwipeCardState): Modifier = this.graphicsLayer {
-    translationX = state.offsetX
-    translationY = state.offsetY
-    rotationZ = state.totalRotation
-    scaleX = state.scale
-    scaleY = state.scale
-    cameraDistance = 12f * density
-}
-
-@Composable
 fun Modifier.swipeCardDrag(
     state: SwipeCardState,
     enabled: Boolean,

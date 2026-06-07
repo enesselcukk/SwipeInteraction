@@ -4,17 +4,14 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.core.model.SwipeDirection
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.hypot
@@ -70,67 +67,6 @@ class SwipeCardState {
         isAnimating = false
     }
 
-    suspend fun dismiss(direction: SwipeDirection): Boolean {
-        isAnimating = true
-        val (targetX, targetY) = dismissTarget(direction)
-        animateTo(targetX, targetY, dismissSpec())
-        isAnimating = false
-        return true
-    }
-
-    suspend fun cycleToBack(
-        targetTranslationX: Float,
-        targetTranslationY: Float,
-        targetScale: Float,
-        targetExtraRotation: Float
-    ) {
-        isAnimating = true
-        val generation = animationGeneration
-        val animX = Animatable(offsetX)
-        val animY = Animatable(offsetY)
-        val animScale = Animatable(scale)
-        val animRotation = Animatable(extraRotation)
-        coroutineScope {
-            launch {
-                animX.animateTo(targetTranslationX, cycleSpec()) {
-                    if (generation == animationGeneration) offsetX = value
-                }
-            }
-            launch {
-                animY.animateTo(targetTranslationY, cycleSpec()) {
-                    if (generation == animationGeneration) offsetY = value
-                }
-            }
-            launch {
-                animScale.animateTo(targetScale, cycleSpec()) {
-                    if (generation == animationGeneration) scale = value
-                }
-            }
-            launch {
-                animRotation.animateTo(targetExtraRotation, cycleSpec()) {
-                    if (generation == animationGeneration) extraRotation = value
-                }
-            }
-        }
-        isAnimating = false
-    }
-
-    suspend fun playHintAnimation(direction: SwipeDirection) {
-        if (isDragging || isAnimating) return
-        isAnimating = true
-        val generation = animationGeneration
-        val (hintX, hintY) = hintOffset(direction)
-        animateTo(hintX, hintY, hintSpec())
-        if (!isDragging && generation == animationGeneration) {
-            delay(650)
-        }
-        if (!isDragging && generation == animationGeneration) {
-            snapBack()
-        }
-        if (generation == animationGeneration) {
-            isAnimating = false
-        }
-    }
 
     fun reset() {
         animationGeneration++
@@ -211,40 +147,8 @@ class SwipeCardState {
         }
     }
 
-    private fun dismissTarget(direction: SwipeDirection): Pair<Float, Float> = when (direction) {
-        SwipeDirection.Right -> cardWidth * 2f to offsetY
-        SwipeDirection.Left -> -cardWidth * 2f to offsetY
-        SwipeDirection.Down -> offsetX to cardHeight * 1.6f
-        SwipeDirection.Up -> offsetX to -cardHeight * 1.6f
-    }
-
-    private fun hintOffset(direction: SwipeDirection): Pair<Float, Float> = when (direction) {
-        SwipeDirection.Right -> cardWidth * 0.28f to 0f
-        SwipeDirection.Left -> -cardWidth * 0.28f to 0f
-        SwipeDirection.Down -> 0f to cardHeight * 0.18f
-        SwipeDirection.Up -> 0f to -cardHeight * 0.18f
-    }
-
     private fun snapSpec() = spring<Float>(
         dampingRatio = Spring.DampingRatioMediumBouncy,
         stiffness = Spring.StiffnessMedium
     )
-
-    private fun dismissSpec() = spring<Float>(
-        dampingRatio = Spring.DampingRatioNoBouncy,
-        stiffness = Spring.StiffnessMediumLow
-    )
-
-    private fun hintSpec() = spring<Float>(
-        dampingRatio = Spring.DampingRatioLowBouncy,
-        stiffness = Spring.StiffnessLow
-    )
-
-    private fun cycleSpec() = spring<Float>(
-        dampingRatio = Spring.DampingRatioNoBouncy,
-        stiffness = Spring.StiffnessMedium
-    )
 }
-
-@Composable
-fun rememberSwipeCardState(): SwipeCardState = remember { SwipeCardState() }
