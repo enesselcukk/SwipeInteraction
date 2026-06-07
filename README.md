@@ -13,7 +13,7 @@ An Android sample app that demonstrates polished, four-direction swipe gestures 
 
 ## Screen recording
 
-[Screen_recording_20260607_122850.mp4](../../../../Desktop/Screen_recording_20260607_122850.mp4)
+https://github.com/user-attachments/assets/385ae560-a88a-40c4-95a2-dd55a719f430
 
 ## Gestures
 
