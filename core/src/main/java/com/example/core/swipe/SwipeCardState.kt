@@ -28,6 +28,9 @@ class SwipeCardState {
     var cardHeight by mutableFloatStateOf(0f)
     var isDragging by mutableStateOf(false)
     var isAnimating by mutableStateOf(false)
+    var scale by mutableFloatStateOf(1f)
+    var extraRotation by mutableFloatStateOf(0f)
+    var lockDragRotation by mutableStateOf(false)
 
     private var animationGeneration by mutableIntStateOf(0)
 
@@ -37,6 +40,9 @@ class SwipeCardState {
         } else {
             0f
         }
+
+    val totalRotation: Float
+        get() = if (lockDragRotation) extraRotation else rotation + extraRotation
 
     fun updateSize(width: Float, height: Float) {
         cardWidth = width
@@ -72,6 +78,43 @@ class SwipeCardState {
         return true
     }
 
+    suspend fun cycleToBack(
+        targetTranslationX: Float,
+        targetTranslationY: Float,
+        targetScale: Float,
+        targetExtraRotation: Float
+    ) {
+        isAnimating = true
+        val generation = animationGeneration
+        val animX = Animatable(offsetX)
+        val animY = Animatable(offsetY)
+        val animScale = Animatable(scale)
+        val animRotation = Animatable(extraRotation)
+        coroutineScope {
+            launch {
+                animX.animateTo(targetTranslationX, cycleSpec()) {
+                    if (generation == animationGeneration) offsetX = value
+                }
+            }
+            launch {
+                animY.animateTo(targetTranslationY, cycleSpec()) {
+                    if (generation == animationGeneration) offsetY = value
+                }
+            }
+            launch {
+                animScale.animateTo(targetScale, cycleSpec()) {
+                    if (generation == animationGeneration) scale = value
+                }
+            }
+            launch {
+                animRotation.animateTo(targetExtraRotation, cycleSpec()) {
+                    if (generation == animationGeneration) extraRotation = value
+                }
+            }
+        }
+        isAnimating = false
+    }
+
     suspend fun playHintAnimation(direction: SwipeDirection) {
         if (isDragging || isAnimating) return
         isAnimating = true
@@ -93,6 +136,9 @@ class SwipeCardState {
         animationGeneration++
         offsetX = 0f
         offsetY = 0f
+        scale = 1f
+        extraRotation = 0f
+        lockDragRotation = false
         isDragging = false
         isAnimating = false
     }
@@ -192,6 +238,11 @@ class SwipeCardState {
     private fun hintSpec() = spring<Float>(
         dampingRatio = Spring.DampingRatioLowBouncy,
         stiffness = Spring.StiffnessLow
+    )
+
+    private fun cycleSpec() = spring<Float>(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
     )
 }
 

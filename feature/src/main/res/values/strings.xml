@@ -17,4 +17,18 @@
     <string name="hint_snooze">Swipe left</string>
     <string name="hint_archive">Swipe down</string>
     <string name="hint_delete">Swipe up</string>
+
+    <string name="stack_screen_title">Interface Craft</string>
+    <string name="stack_screen_eyebrow">INTERFACE CRAFT</string>
+
+    <string name="stack_card_working_knowledge_title">Working Knowledge</string>
+    <string name="stack_card_working_knowledge_desc">Patterns and principles gathered from real product work, ready to apply.</string>
+    <string name="stack_card_practical_demo_title">Practical Demonstration</string>
+    <string name="stack_card_practical_demo_desc">See how small interaction choices shape the feel of an entire interface.</string>
+    <string name="stack_card_craft_notes_title">Craft Notes</string>
+    <string name="stack_card_craft_notes_desc">Short essays on motion, typography, and the details most teams overlook.</string>
+    <string name="stack_card_field_study_title">Field Study</string>
+    <string name="stack_card_field_study_desc">Annotated breakdowns of interfaces that reward attention and patience.</string>
+    <string name="stack_card_design_log_title">Design Log</string>
+    <string name="stack_card_design_log_desc">Experiments in progress — sketches, prototypes, and lessons learned along the way.</string>
 </resources>
