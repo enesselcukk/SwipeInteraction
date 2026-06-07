@@ -18,17 +18,23 @@
     <string name="hint_archive">Swipe down</string>
     <string name="hint_delete">Swipe up</string>
 
-    <string name="stack_screen_title">Interface Craft</string>
-    <string name="stack_screen_eyebrow">INTERFACE CRAFT</string>
+    <string name="stack_screen_title">Swipe Deck</string>
+    <string name="stack_screen_eyebrow">SWIPE INTERACTION</string>
 
-    <string name="stack_card_working_knowledge_title">Working Knowledge</string>
-    <string name="stack_card_working_knowledge_desc">Patterns and principles gathered from real product work, ready to apply.</string>
-    <string name="stack_card_practical_demo_title">Practical Demonstration</string>
-    <string name="stack_card_practical_demo_desc">See how small interaction choices shape the feel of an entire interface.</string>
-    <string name="stack_card_craft_notes_title">Craft Notes</string>
-    <string name="stack_card_craft_notes_desc">Short essays on motion, typography, and the details most teams overlook.</string>
-    <string name="stack_card_field_study_title">Field Study</string>
-    <string name="stack_card_field_study_desc">Annotated breakdowns of interfaces that reward attention and patience.</string>
-    <string name="stack_card_design_log_title">Design Log</string>
-    <string name="stack_card_design_log_desc">Experiments in progress — sketches, prototypes, and lessons learned along the way.</string>
+    <string name="stack_card_tag_physics">Physics</string>
+    <string name="stack_card_tag_loop">Loop</string>
+    <string name="stack_card_tag_depth">Depth</string>
+    <string name="stack_card_tag_direction">Direction</string>
+    <string name="stack_card_tag_motion">Motion</string>
+
+    <string name="stack_card_gesture_physics_title">Gesture Physics</string>
+    <string name="stack_card_gesture_physics_desc">Drag resistance and snap-back make every swipe feel deliberate and responsive.</string>
+    <string name="stack_card_loop_rhythm_title">Loop Rhythm</string>
+    <string name="stack_card_loop_rhythm_desc">Cards never leave the deck — they circle back with a smooth, satisfying arc.</string>
+    <string name="stack_card_depth_layer_title">Depth &amp; Layer</string>
+    <string name="stack_card_depth_layer_desc">Each card sits at a slight offset, giving the stack tangible depth and hierarchy.</string>
+    <string name="stack_card_direction_paths_title">Direction Paths</string>
+    <string name="stack_card_direction_paths_desc">Swipe left or right and the card tucks behind from the side you chose.</string>
+    <string name="stack_card_motion_craft_title">Motion Craft</string>
+    <string name="stack_card_motion_craft_desc">Scale, rotation, and z-index choreographed into one fluid send-to-back gesture.</string>
 </resources>

@@ -20,12 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.core.ui.theme.CatalogInk
-import com.example.core.ui.theme.CatalogMuted
+import com.example.core.ui.theme.DeckTheme
 import com.example.feature.R
 import com.example.feature.state.LoopingCardStackState
 
@@ -53,9 +50,10 @@ fun AnimatedStackHeader(
     ) {
         Text(
             text = stringResource(R.string.stack_screen_eyebrow),
-            style = MaterialTheme.typography.labelMedium,
-            color = CatalogMuted,
-            letterSpacing = 1.2.sp
+            style = MaterialTheme.typography.labelMedium.copy(
+                fontWeight = FontWeight.SemiBold
+            ),
+            color = DeckTheme.accent
         )
         AnimatedContent(
             targetState = state.frontCard()?.id,
@@ -63,18 +61,15 @@ fun AnimatedStackHeader(
                 (fadeIn(tween(280)) + slideInVertically { it / 3 }) togetherWith
                     (fadeOut(tween(220)) + slideOutVertically { -it / 4 })
             },
-            modifier = Modifier.padding(top = 10.dp),
+            modifier = Modifier.padding(top = 8.dp),
             label = "front-card-title"
         ) { cardId ->
             val card = state.cards.find { it.id == cardId }
             Text(
                 text = card?.let { stringResource(it.titleRes) }
                     ?: stringResource(R.string.stack_screen_title),
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Normal,
-                fontSize = 30.sp,
-                lineHeight = 36.sp,
-                color = CatalogInk
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
         StackProgressIndicator(

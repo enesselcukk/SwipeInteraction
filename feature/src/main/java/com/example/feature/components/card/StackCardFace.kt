@@ -1,5 +1,6 @@
 package com.example.feature.components.card
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -7,16 +8,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.feature.model.StackCard
 
 @Composable
@@ -24,24 +24,31 @@ fun StackCardFace(
     card: StackCard,
     modifier: Modifier = Modifier
 ) {
+    val visual = card.visual
+    val gradient = Brush.verticalGradient(
+        colors = listOf(visual.gradientTop, visual.gradientBottom)
+    )
+
     key(card.id) {
         Surface(
             modifier = modifier,
-            shape = RoundedCornerShape(20.dp),
-            shadowElevation = 6.dp,
-            color = card.backgroundColor
+            shape = RoundedCornerShape(24.dp),
+            shadowElevation = 8.dp,
+            color = visual.gradientBottom
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(gradient)
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1.15f)
+                        .aspectRatio(1.12f)
                 ) {
                     CardPatternCanvas(
-                        pattern = card.pattern,
-                        color = card.patternColor,
+                        pattern = visual.pattern,
+                        color = visual.patternColor,
                         seed = card.id,
                         modifier = Modifier.fillMaxSize()
                     )
@@ -51,20 +58,28 @@ fun StackCardFace(
                         .fillMaxWidth()
                         .padding(horizontal = 22.dp, vertical = 20.dp)
                 ) {
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = visual.accent.copy(alpha = 0.22f)
+                    ) {
+                        Text(
+                            text = stringResource(card.tagRes),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = visual.onCard,
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                        )
+                    }
                     Text(
                         text = stringResource(card.titleRes),
-                        color = card.contentColor,
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 24.sp,
-                        lineHeight = 30.sp
+                        style = MaterialTheme.typography.titleMedium,
+                        color = visual.onCard,
+                        modifier = Modifier.padding(top = 12.dp)
                     )
                     Text(
                         text = stringResource(card.descriptionRes),
-                        color = card.contentColor.copy(alpha = 0.82f),
-                        fontSize = 15.sp,
-                        lineHeight = 22.sp,
-                        modifier = Modifier.padding(top = 10.dp)
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = visual.onCard.copy(alpha = 0.82f),
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
             }
