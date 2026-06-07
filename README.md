@@ -1,53 +1,56 @@
 # SwipeInteraction
 
-An Android sample app that demonstrates polished, four-direction swipe gestures built with Jetpack Compose. Users learn task-style actions — complete, snooze, archive, and delete — through an interactive card tutorial with hint animations and a completion flow.
+An Android sample app that demonstrates a polished, looping card stack built with Jetpack Compose. Inspired by [Interface Craft](https://interfacecraft.dev), users pull the front card in any direction and watch it animate to the back of the deck — the stack never runs out of cards.
 
 ## Features
 
-- **Four-direction swiping** — right, left, up, and down, each mapped to a distinct action
-- **Card stack UI** — depth-scaled background cards with smooth drag, rotation, and dismiss animations
-- **Guided tutorial** — automatic hint animations show the expected swipe direction on each card
-- **Validation feedback** — correct swipes advance the stack; incorrect swipes snap back
-- **Completion screen** — a success state with a **Try again** button to restart the tutorial
-- **Material 3 design** — action-specific color palette, edge-to-edge layout, and dynamic theming support
+- **Looping card stack** — the front card cycles to the back instead of being dismissed
+- **Directional send-to-back animation** — swipe right or down to tuck behind from the right; swipe left or up from the left
+- **Fanned stack layout** — depth-scaled cards offset to the right with subtle rotation
+- **Drag-driven promotion** — background cards scale up as the front card is pulled
+- **Animated header** — the current card title crossfades as the deck rotates
+- **Layered architecture** — state, animation, layout, and UI split across focused modules
+- **Material 3 design** — edge-to-edge layout with a warm, editorial palette
 
 ## Screen recording
 
-[Screen_recording_20260607_122850.mp4](../../../../Desktop/Screen_recording_20260607_122850.mp4)
+https://github.com/user-attachments/assets/385ae560-a88a-40c4-95a2-dd55a719f430
 
 ## Gestures
 
-| Direction | Action  | Use case                                      |
-|-----------|---------|-----------------------------------------------|
-| Right     | Complete | Mark a finished task as done                  |
-| Left      | Snooze   | Postpone a task for later                     |
-| Down      | Archive  | Remove a task from the list and archive it    |
-| Up        | Delete   | Permanently delete a task                     |
+| Direction | Send-to-back path |
+|-----------|-------------------|
+| Right     | Sweeps right, settles behind from the right |
+| Left      | Sweeps left, settles behind from the left |
+| Down      | Drops down, tucks in from the right |
+| Up        | Lifts up, tucks in from the left |
 
-## Tech Stack
+Any direction above the swipe threshold triggers the cycle. Below the threshold, the card snaps back.
 
-| Layer        | Technology                          |
-|--------------|-------------------------------------|
-| Language     | Kotlin                              |
-| UI           | Jetpack Compose, Material 3         |
-| Min SDK      | 24 (Android 7.0)                    |
-| Target SDK   | 36                                  |
-| Build        | Gradle (Kotlin DSL), AGP 9.2        |
+## How it works
 
+1. Five cards are rendered in a fanned stack; only the front card accepts drag input.
+2. Dragging the front card promotes the cards behind it toward the front position.
+3. When the swipe threshold is met, `LoopingCardStackState.cycleToBack()` runs a ~920 ms keyframe path via `CyclePathAnimation`.
+4. The cycling card passes behind the stack (z-index drops mid-animation) while the next card moves to the front.
+5. When the animation finishes, the list rotates atomically (`removeAt(0)` + `add`) and swipe state resets — ready for the next pull.
 
-## How It Works
+## Gesture configuration
 
-1. The tutorial presents four cards, one per swipe action.
-2. After a short delay, the top card plays a hint animation in the expected direction.
-3. The user swipes the card; if the direction matches, the card dismisses and the next card appears.
-4. When all cards are completed, a success screen is shown with the option to restart.
-5. `SwipeCardState` handles drag tracking, spring-based animations, velocity-aware direction resolution, and animation cancellation on reset.
+Thresholds and drag behavior live in `SwipeCardState.kt`:
 
-## Gesture Configuration
-
-Thresholds and animation behavior are defined in `SwipeCardState.kt`:
-
-- **Dismiss threshold** — 22% of card width/height along a single axis
-- **Corner dismiss threshold** — 35% combined diagonal progress
+- **Cycle threshold** — 22% of card width/height along a single axis
+- **Corner threshold** — 35% combined diagonal progress
 - **Fling velocity threshold** — 900 px/s for fast swipes
 - **Max rotation** — 12° based on horizontal drag offset
+- **Cycle duration** — 920 ms (`CYCLE_DURATION_MS` in `CyclePathAnimation.kt`)
+
+## Tech stack
+
+| Layer      | Technology                   |
+|------------|------------------------------|
+| Language   | Kotlin                       |
+| UI         | Jetpack Compose, Material 3 |
+| Min SDK    | 24 (Android 7.0)             |
+| Target SDK | 36                           |
+| Build      | Gradle (Kotlin DSL), AGP 9.2 |
