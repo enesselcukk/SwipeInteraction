@@ -1,6 +1,6 @@
 # SwipeInteraction
 
-An Android sample app that demonstrates a polished, looping card stack built with Jetpack Compose. Inspired by [Interface Craft](https://interfacecraft.dev), users pull the front card in any direction and watch it animate to the back of the deck — the stack never runs out of cards.
+An Android sample app that demonstrates a polished, looping card stack built with Jetpack Compose. Pull the front card in any direction and watch it animate to the back of the deck — the stack never runs out of cards.
 
 ## Features
 
@@ -9,8 +9,9 @@ An Android sample app that demonstrates a polished, looping card stack built wit
 - **Fanned stack layout** — depth-scaled cards offset to the right with subtle rotation
 - **Drag-driven promotion** — background cards scale up as the front card is pulled
 - **Animated header** — the current card title crossfades as the deck rotates
+- **Custom deck theme** — gradient cards, category tags, and a dedicated `DeckTheme` token set
 - **Layered architecture** — state, animation, layout, and UI split across focused modules
-- **Material 3 design** — edge-to-edge layout with a warm, editorial palette
+- **Material 3 design** — edge-to-edge layout with a cool indigo-accent palette
 
 ## Screen recording
 
